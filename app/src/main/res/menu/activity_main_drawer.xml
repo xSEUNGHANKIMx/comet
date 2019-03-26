@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navRest"
+            android:icon="@drawable/ic_restapi"
+            android:title="Retrofit" />
+        <item
+            android:id="@+id/navBroadcast"
+            android:icon="@drawable/ic_broadcast"
+            android:title="Broadcast" />
+        <item
+            android:id="@+id/navBarcode"
+            android:icon="@drawable/ic_barcode"
+            android:title="Barcode Scan" />
+        <item
+            android:id="@+id/navCapture"
+            android:icon="@drawable/ic_camera"
+            android:title="Capture Photo" />
+    </group>
+
+</menu>
