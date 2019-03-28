@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.comet.Activity.MainActivity;
+import io.comet.R;
 
 public class LoginFragment extends Fragment {
     private Context mContext;
@@ -21,6 +22,6 @@ public class LoginFragment extends Fragment {
         mContext = getContext();
         mActivity = (MainActivity) getActivity();
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 }

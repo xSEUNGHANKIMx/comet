@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorToolBar"
+            android:fitsSystemWindows="false"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/signInTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/title_top_margin"
+                android:layout_marginTop="@dimen/title_top_margin"
+                android:text="@string/lr_signin_main_title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/display_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/signInSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/title_top_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@string/lr_signin_sub_title"
+                android:textColor="@color/textGrey"
+                android:textSize="@dimen/default_text"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:orientation="vertical"
+                android:padding="@dimen/default_margin">
+
+                <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:labelText="@string/all_email"
+                    app:panelBackgroundColor="@color/transparent">
+
+                    <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                        android:id="@+id/emailEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:nextFocusForward="@id/pwdEdt"
+                        android:singleLine="true" />
+                </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+
+                <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    app:labelText="@string/all_password"
+                    app:panelBackgroundColor="@color/transparent">
+
+                    <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                        android:id="@+id/pwdEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:imeOptions="actionGo"
+                        android:inputType="textPassword"
+                        android:singleLine="true" />
+                </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+                <Button
+                    android:id="@+id/loginBtn"
+                    style="@style/WorksButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/all_signin" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

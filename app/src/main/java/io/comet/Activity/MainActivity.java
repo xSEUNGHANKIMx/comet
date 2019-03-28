@@ -121,16 +121,16 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.navRest1) {
-
+         if (id == R.id.navRest1) {
+            replaceFragment(FRAGMENT_ID_LOGIN);
         } else if (id == R.id.navRest2) {
-
-        } else if (id == R.id.navBroadcast) {
-
+            replaceFragment(FRAGMENT_ID_ZOMATO);
         } else if (id == R.id.navBarcode) {
-
+            replaceFragment(FRAGMENT_ID_BROADCAST);
         } else if (id == R.id.navCapture) {
-
+            replaceFragment(FRAGMENT_ID_BARCODE);
+        } else if (id == R.id.navCapture) {
+            replaceFragment(FRAGMENT_ID_CAPTURE);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

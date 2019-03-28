@@ -4,7 +4,23 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="background_text">#80000000</color>
-    <color name="book_loading_background">#ffffff</color>
+    <color name="book_loading_background">#FFFFFF</color>
     <color name="book_loading_book">#ff33b5e5</color>
-    <color name="book_loading_page">#ffffff</color>
+    <color name="book_loading_page">#FFFFFF</color>
+    <color name="colorToolBar">#FFFFFF</color>
+
+    <color name="textLight">#FFFFFF</color>
+    <color name="textLgtGrey">#B9BABE</color>
+    <color name="textDrkGrey">#343434</color>
+    <color name="textGrey">#8B8E95</color>
+    <color name="textUnfocused">#89FFFFFF</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="red">#FF585D</color>
+    <color name="green">#8AC917</color>
+    <color name="yello">#FFCB00</color>
+    <color name="grey">#E4E4E9</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorDisable">#B9BABE</color>
 </resources>
