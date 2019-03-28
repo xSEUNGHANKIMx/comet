@@ -5,9 +5,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navRest"
+        android:id="@+id/navRest1"
+        android:icon="@drawable/ic_restapi"
+        android:title="Retrofit 1" />
+        <item
+            android:id="@+id/navRest2"
             android:icon="@drawable/ic_restapi"
-            android:title="Retrofit" />
+            android:title="Retrofit 2" />
         <item
             android:id="@+id/navBroadcast"
             android:icon="@drawable/ic_broadcast"
