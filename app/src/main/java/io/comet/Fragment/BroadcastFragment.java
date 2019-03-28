@@ -9,17 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import io.comet.Activity.BaseActivity;
+import io.comet.Activity.MainActivity;
 
 public class BroadcastFragment extends Fragment {
     private Context mContext;
-    private BaseActivity mActivity;
+    private MainActivity mActivity;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getContext();
-        mActivity = (BaseActivity) getActivity();
+        mActivity = (MainActivity) getActivity();
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }

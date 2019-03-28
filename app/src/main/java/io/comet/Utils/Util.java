@@ -4,15 +4,15 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import io.comet.Activity.MainActivity;
 import io.comet.R;
-import io.comet.Activity.BaseActivity;
 
 public class Util {
     private static MaterialDialog mDlg;
 
     public static void alert(Context context, int title, int message ) {
         try {
-            BaseActivity activity = (BaseActivity) context;
+            MainActivity activity = (MainActivity) context;
             if(activity.getCurrentFocus() != null) {
                 InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(
                         Context.INPUT_METHOD_SERVICE);

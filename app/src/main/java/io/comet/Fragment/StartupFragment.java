@@ -10,8 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.comet.Activity.MainActivity;
+import io.comet.R;
 
-public class ZomatoSearchFragment extends Fragment {
+public class StartupFragment extends Fragment {
     private Context mContext;
     private MainActivity mActivity;
 
@@ -21,6 +22,6 @@ public class ZomatoSearchFragment extends Fragment {
         mContext = getContext();
         mActivity = (MainActivity) getActivity();
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_startup, container, false);
     }
 }
