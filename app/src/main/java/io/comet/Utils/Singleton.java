@@ -1,5 +1,7 @@
 package io.comet.Utils;
 
+import android.os.AsyncTask;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +16,7 @@ import retrofit2.Retrofit;
 public class Singleton {
     private volatile static Singleton instance = null;
     private final static String DEVELOPMENT_DOMAIN = "https://api.gpac.works/";
-    private AccessToken token = new AccessToken("", "");
+    private static AccessToken token = new AccessToken("", "");
 
     private Singleton() {
     }
@@ -37,7 +39,7 @@ public class Singleton {
         token = new AccessToken(aToken, rToken);
     }
 
-    public APIService retrofit() {
+    public static APIService retrofit() {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .addConverterFactory(CustomGsonBuilder.getCustomConverter())
                 .baseUrl(DEVELOPMENT_DOMAIN);
@@ -50,27 +52,16 @@ public class Singleton {
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                        Request request = new Interceptor.Chain() {
-                            @Override
-                            public Request request() {
-                                return null;
-                            }
-
-                            @Override
-                            public Response proceed(Request request) throws IOException {
-                                return null;
-                            }
-
-                            @Override
-                            public Connection connection() {
-                                return null;
-                            }
-                        }.request().newBuilder()
+                        Request request = chain.request().newBuilder()
                                 .addHeader("x_access_token", aToken.aToken)
                                 .addHeader("xmob", "Android")
                                 .build();
                         return chain.proceed(request);
                     }
-                })
+                }).build();
+
+        builder.client(client);
+        return builder.build().create(APIService.class);
     }
+
 }
