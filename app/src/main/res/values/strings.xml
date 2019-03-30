@@ -25,4 +25,5 @@
     <string name="login_fail_not_found_token">Can not found access token.</string>
     <string name="login_fail_unknown">Log in failed by unknown issue.</string>
     <string name="back_again">Press back button again to exit.</string>
+    <string name="weather_detail_title">Daily Weather Detail</string>
 </resources>

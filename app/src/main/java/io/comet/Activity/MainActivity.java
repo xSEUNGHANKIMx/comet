@@ -23,7 +23,7 @@ import io.comet.Fragment.CapturePhotoFragment;
 import io.comet.Fragment.LoginFragment;
 import io.comet.Fragment.LogoutFragment;
 import io.comet.Fragment.StartupFragment;
-import io.comet.Fragment.ZomatoSearchFragment;
+import io.comet.Fragment.WeatherFragment;
 import io.comet.Listener.NetworkBroadcast;
 import io.comet.R;
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
     final public int FRAGMENT_ID_STARTUP = 0;
     final public int FRAGMENT_ID_LOGIN = 1;
     final public int FRAGMENT_ID_LOGOUT = 2;
-    final public int FRAGMENT_ID_ZOMATO = 3;
+    final public int FRAGMENT_ID_WEATHER = 3;
     final public int FRAGMENT_ID_BROADCAST = 4;
     final public int FRAGMENT_ID_BARCODE = 5;
     final public int FRAGMENT_ID_CAPTURE = 6;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     private NetworkBroadcast networkReceiver = null;
     private StartupFragment startupFragment = null;
     private LoginFragment loginFragment = null;
-    private ZomatoSearchFragment zomatoSearchFragment = null;
+    private WeatherFragment weatherFragment = null;
     private BroadcastFragment broadcastFragment = null;
     private BarcodeScanFragment barcodeScanFragment = null;
     private CapturePhotoFragment capturePhotoFragment = null;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         mFragments.put(FRAGMENT_ID_STARTUP, new StartupFragment());
         mFragments.put(FRAGMENT_ID_LOGIN, new LoginFragment());
         mFragments.put(FRAGMENT_ID_LOGOUT, new LogoutFragment());
-        mFragments.put(FRAGMENT_ID_ZOMATO, new ZomatoSearchFragment());
+        mFragments.put(FRAGMENT_ID_WEATHER, new WeatherFragment());
         mFragments.put(FRAGMENT_ID_BROADCAST, new BroadcastFragment());
         mFragments.put(FRAGMENT_ID_BARCODE, new BarcodeScanFragment());
         mFragments.put(FRAGMENT_ID_CAPTURE, new CapturePhotoFragment());
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.navRest1) {
             replaceFragment(FRAGMENT_ID_LOGIN);
         } else if (id == R.id.navRest2) {
-            replaceFragment(FRAGMENT_ID_ZOMATO);
+            replaceFragment(FRAGMENT_ID_WEATHER);
         } else if (id == R.id.navBarcode) {
             replaceFragment(FRAGMENT_ID_BROADCAST);
         } else if (id == R.id.navCapture) {

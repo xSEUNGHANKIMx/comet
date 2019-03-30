@@ -105,13 +105,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="70dp"
-                    android:text="Email : ccomett@naver.com"/>
+                    android:text="Email : ccomett@naver.com" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Password : qwerty123"/>
+                    android:text="Password : qwerty123" />
 
             </LinearLayout>
         </LinearLayout>

@@ -1,22 +1,24 @@
 package io.comet.Utils;
 
-import android.os.AsyncTask;
-
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import io.comet.Model.AccessToken;
-import okhttp3.Connection;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Singleton {
     private volatile static Singleton instance = null;
-    private final String DEVELOPMENT_DOMAIN = "https://api.gpac.works/";
+    private final String LOGIN_DOMAIN = "https://api.gpac.works/";
     private AccessToken token = new AccessToken("", "");
+    private final String DARKSKY_DOMAIN = "https://api.darksky.net/forecast";
+    private final String DARKSKY_KEY = "9ddb5bc933606669297dc963fbd3574b";
 
     private Singleton() {
     }
@@ -39,10 +41,10 @@ public class Singleton {
         token = new AccessToken(aToken, rToken);
     }
 
-    public APIService retrofit() {
+    public APIService loginRetrofit() {
         Retrofit.Builder builder = new Retrofit.Builder()
-                .addConverterFactory(CustomGsonBuilder.getCustomConverter())
-                .baseUrl(DEVELOPMENT_DOMAIN);
+                .baseUrl(LOGIN_DOMAIN)
+                .addConverterFactory(CustomGsonBuilder.getCustomConverter());
 
         final AccessToken aToken = token;
 
@@ -65,4 +67,11 @@ public class Singleton {
         return builder.build().create(APIService.class);
     }
 
+    public Retrofit darkskyRetrofit() {
+        return new Retrofit.Builder()
+                .baseUrl(DARKSKY_DOMAIN + File.separator + DARKSKY_KEY + File.separator)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+    }
 }

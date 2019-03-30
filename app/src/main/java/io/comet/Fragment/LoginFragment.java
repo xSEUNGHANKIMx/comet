@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -123,10 +122,10 @@ public class LoginFragment extends Fragment {
         protected Integer doInBackground(String... strings) {
             int ret = 0;
             try {
-                Response<AccessToken> response = Singleton.getInstance().retrofit().login(email, password).execute();
+                Response<AccessToken> response = Singleton.getInstance().loginRetrofit().login(email, password).execute();
                 if (response != null) {
                     ret = response.code();
-                    if(ret == 200) {
+                    if (ret == 200) {
                         AccessToken token = response.body();
                         Singleton.getInstance().setToken(token.aToken, token.rToken);
                     }
@@ -176,7 +175,7 @@ public class LoginFragment extends Fragment {
             Util.alert(mContext, title, message, new AlertConfirmExecute() {
                 @Override
                 public void execute() {
-                    if(rspCode == 200 || rspCode == 500) {
+                    if (rspCode == 200 || rspCode == 500) {
                         goToLogoutFragment();
                     }
                 }

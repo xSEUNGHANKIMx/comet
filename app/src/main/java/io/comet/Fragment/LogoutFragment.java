@@ -53,7 +53,7 @@ public class LogoutFragment extends Fragment {
         protected Integer doInBackground(String... strings) {
             int ret = 0;
             try {
-                Response<SimpleRes> response = Singleton.getInstance().retrofit().logout("ANDROID").execute();
+                Response<SimpleRes> response = Singleton.getInstance().loginRetrofit().logout("ANDROID").execute();
                 if (response != null) {
                     Singleton.getInstance().setToken("", "");
                 }
