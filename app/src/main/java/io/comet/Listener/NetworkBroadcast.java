@@ -31,13 +31,21 @@ public class NetworkBroadcast extends BroadcastReceiver {
     }
 
     private void connectDialog(Context context) {
-        if (!NetworkUtil.isNetConnected(context)) {
-                Util.alert(context, R.string.err_connection, R.string.err_connection, new AlertConfirmExecute() {
-                    @Override
-                    public void execute() {
+        String title, message;
 
-                    }
-                });
+        if (NetworkUtil.isNetConnected(context)) {
+            title = context.getString(R.string.all_success);
+            message = context.getString(R.string.network_connected);
+        } else {
+            title = context.getString(R.string.all_sorry);
+            message = context.getString(R.string.network_not_connected);
         }
+
+        Util.alert(context, title, message, new AlertConfirmExecute() {
+            @Override
+            public void execute() {
+
+            }
+        });
     }
 }

@@ -24,13 +24,13 @@
     </android.support.design.widget.AppBarLayout>
 
     <Button
-        android:id="@+id/logoutBtn"
+        android:id="@+id/broadcastBtn"
         style="@style/WorksButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/default_margin"
-        android:text="@string/all_logout"
+        android:text="@string/send_broadcast_text"
         android:textSize="20sp" />
 
 </LinearLayout>

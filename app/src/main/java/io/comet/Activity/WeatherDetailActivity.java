@@ -24,7 +24,7 @@ import io.comet.R;
 import io.comet.Utils.SeparatorDeco;
 import io.comet.Utils.TimeUtils;
 
-public class WeatherDetailActivity extends AppCompatActivity {
+public class WeatherDetailActivity extends BaseActivity {
 
     MyRecyclerViewAdapter mAdapter;
     List<String> mDetails = new ArrayList<>();

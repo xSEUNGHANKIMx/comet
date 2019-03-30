@@ -15,7 +15,8 @@
     <string name="all_password">Password</string>
     <string name="all_success">Success!</string>
     <string name="all_sorry">Sorry!</string>
-    <string name="err_connection">Connection Error</string>
+    <string name="network_not_connected">Network is not connected.</string>
+    <string name="network_connected">Network is connected.</string>
     <string name="lr_login_main_title">Log In</string>
     <string name="lr_login_sub_title">Log In to your account</string>
     <string name="login_success_msg">Your account logged in success.</string>
@@ -26,4 +27,6 @@
     <string name="login_fail_unknown">Log in failed by unknown issue.</string>
     <string name="back_again">Press back button again to exit.</string>
     <string name="weather_detail_title">Daily Weather Detail</string>
+    <string name="user_broadcast_received">User broadcast received!</string>
+    <string name="send_broadcast_text">Send User Broadcast</string>
 </resources>

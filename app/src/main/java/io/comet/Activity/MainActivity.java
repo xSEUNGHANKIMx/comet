@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -26,8 +25,9 @@ import io.comet.Fragment.StartupFragment;
 import io.comet.Fragment.WeatherFragment;
 import io.comet.Listener.NetworkBroadcast;
 import io.comet.R;
+import io.comet.Utils.Singleton;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     final public int FRAGMENT_ID_STARTUP = 0;
@@ -39,14 +39,6 @@ public class MainActivity extends AppCompatActivity
     final public int FRAGMENT_ID_CAPTURE = 6;
     final private long FINISH_INTERVAL_TIME = 2000L;
 
-    private IntentFilter networkFilter = null;
-    private NetworkBroadcast networkReceiver = null;
-    private StartupFragment startupFragment = null;
-    private LoginFragment loginFragment = null;
-    private WeatherFragment weatherFragment = null;
-    private BroadcastFragment broadcastFragment = null;
-    private BarcodeScanFragment barcodeScanFragment = null;
-    private CapturePhotoFragment capturePhotoFragment = null;
     private SparseArray<Fragment> mFragments = new SparseArray<Fragment>();
     private DrawerLayout mDrawerLayout = null;
     private Fragment mCurrentFragment = null;
@@ -78,8 +70,6 @@ public class MainActivity extends AppCompatActivity
         mFragments.put(FRAGMENT_ID_CAPTURE, new CapturePhotoFragment());
 
         replaceFragment(FRAGMENT_ID_STARTUP);
-        networkFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        networkReceiver = new NetworkBroadcast(this);
     }
 
     public void replaceFragment(int index) {
@@ -118,12 +108,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.navRest1) {
-            replaceFragment(FRAGMENT_ID_LOGIN);
+            if(Singleton.getInstance().getToken().aToken.isEmpty()) {
+                replaceFragment(FRAGMENT_ID_LOGIN);
+            } else {
+                replaceFragment(FRAGMENT_ID_LOGOUT);
+            }
         } else if (id == R.id.navRest2) {
             replaceFragment(FRAGMENT_ID_WEATHER);
-        } else if (id == R.id.navBarcode) {
+        } else if (id == R.id.navBroadcast) {
             replaceFragment(FRAGMENT_ID_BROADCAST);
-        } else if (id == R.id.navCapture) {
+        } else if (id == R.id.navBarcode) {
             replaceFragment(FRAGMENT_ID_BARCODE);
         } else if (id == R.id.navCapture) {
             replaceFragment(FRAGMENT_ID_CAPTURE);

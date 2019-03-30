@@ -33,6 +33,7 @@
             android:label="@string/weather_detail_title"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
     </application>
 
 </manifest>
