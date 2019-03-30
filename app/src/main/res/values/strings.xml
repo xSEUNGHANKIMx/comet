@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Comet Sample Code</string>
+    <string name="app_name">Comet</string>
+    <string name="app_title">Comet Sample Code</string>
     <string name="splash_app_name">Comet Sample Code</string>
     <string name="main_activity_text">Open navigation view to see samples</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -27,6 +28,8 @@
     <string name="login_fail_unknown">Log in failed by unknown issue.</string>
     <string name="back_again">Press back button again to exit.</string>
     <string name="weather_detail_title">Daily Weather Detail</string>
+    <string name="image_viewer_title">Image Viewer</string>
     <string name="user_broadcast_received">User broadcast received!</string>
     <string name="send_broadcast_text">Send User Broadcast</string>
+    <string name="capture_photo_text">Capture Photo</string>
 </resources>

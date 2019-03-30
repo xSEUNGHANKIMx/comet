@@ -1,12 +1,19 @@
 package io.comet.Activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import io.comet.Fragment.BarcodeScanFragment;
@@ -26,6 +34,10 @@ import io.comet.Fragment.WeatherFragment;
 import io.comet.Listener.NetworkBroadcast;
 import io.comet.R;
 import io.comet.Utils.Singleton;
+import io.comet.Utils.Util;
+import rx.Single;
+
+import static butterknife.internal.Utils.arrayOf;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -70,6 +82,8 @@ public class MainActivity extends BaseActivity
         mFragments.put(FRAGMENT_ID_CAPTURE, new CapturePhotoFragment());
 
         replaceFragment(FRAGMENT_ID_STARTUP);
+
+        Singleton.isNetworkConnected = Util.isNetConnected(this);
     }
 
     public void replaceFragment(int index) {
@@ -142,5 +156,14 @@ public class MainActivity extends BaseActivity
                 Toast.makeText(this, R.string.back_again, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == Singleton.ACCESS_CAMERA && resultCode == RESULT_OK) {
+            startActivity(new Intent(MainActivity.this, ImageViewerActivity.class));
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

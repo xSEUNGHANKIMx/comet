@@ -20,6 +20,8 @@ public class Singleton {
     private final String DARKSKY_DOMAIN = "https://api.darksky.net/forecast";
     private final String DARKSKY_KEY = "9ddb5bc933606669297dc963fbd3574b";
     public final static String USER_BROADCAST_ACTION = "USER_BROADCAST_ACTION";
+    public final static int ACCESS_CAMERA = 100;
+    public static boolean isNetworkConnected = true;
 
     private Singleton() {
     }
