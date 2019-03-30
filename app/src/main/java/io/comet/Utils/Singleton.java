@@ -15,8 +15,8 @@ import retrofit2.Retrofit;
 
 public class Singleton {
     private volatile static Singleton instance = null;
-    private final static String DEVELOPMENT_DOMAIN = "https://api.gpac.works/";
-    private static AccessToken token = new AccessToken("", "");
+    private final String DEVELOPMENT_DOMAIN = "https://api.gpac.works/";
+    private AccessToken token = new AccessToken("", "");
 
     private Singleton() {
     }
@@ -39,7 +39,7 @@ public class Singleton {
         token = new AccessToken(aToken, rToken);
     }
 
-    public static APIService retrofit() {
+    public APIService retrofit() {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .addConverterFactory(CustomGsonBuilder.getCustomConverter())
                 .baseUrl(DEVELOPMENT_DOMAIN);
@@ -54,6 +54,7 @@ public class Singleton {
                     public Response intercept(Chain chain) throws IOException {
                         Request request = chain.request().newBuilder()
                                 .addHeader("x_access_token", aToken.aToken)
+                                .addHeader("xsoc", "")
                                 .addHeader("xmob", "Android")
                                 .build();
                         return chain.proceed(request);

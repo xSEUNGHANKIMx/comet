@@ -15,11 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import io.comet.Fragment.BarcodeScanFragment;
 import io.comet.Fragment.BroadcastFragment;
 import io.comet.Fragment.CapturePhotoFragment;
 import io.comet.Fragment.LoginFragment;
+import io.comet.Fragment.LogoutFragment;
 import io.comet.Fragment.StartupFragment;
 import io.comet.Fragment.ZomatoSearchFragment;
 import io.comet.Listener.NetworkBroadcast;
@@ -28,12 +30,14 @@ import io.comet.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    final private int FRAGMENT_ID_STARTUP = 0;
-    final private int FRAGMENT_ID_LOGIN = 1;
-    final private int FRAGMENT_ID_ZOMATO = 2;
-    final private int FRAGMENT_ID_BROADCAST = 3;
-    final private int FRAGMENT_ID_BARCODE = 4;
-    final private int FRAGMENT_ID_CAPTURE = 5;
+    final public int FRAGMENT_ID_STARTUP = 0;
+    final public int FRAGMENT_ID_LOGIN = 1;
+    final public int FRAGMENT_ID_LOGOUT = 2;
+    final public int FRAGMENT_ID_ZOMATO = 3;
+    final public int FRAGMENT_ID_BROADCAST = 4;
+    final public int FRAGMENT_ID_BARCODE = 5;
+    final public int FRAGMENT_ID_CAPTURE = 6;
+    final private long FINISH_INTERVAL_TIME = 2000L;
 
     private IntentFilter networkFilter = null;
     private NetworkBroadcast networkReceiver = null;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout mDrawerLayout = null;
     private Fragment mCurrentFragment = null;
     private int mCurrentFragmentIdx = FRAGMENT_ID_STARTUP;
+    private long backPressedTime = 0L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity
 
         mFragments.put(FRAGMENT_ID_STARTUP, new StartupFragment());
         mFragments.put(FRAGMENT_ID_LOGIN, new LoginFragment());
+        mFragments.put(FRAGMENT_ID_LOGOUT, new LogoutFragment());
         mFragments.put(FRAGMENT_ID_ZOMATO, new ZomatoSearchFragment());
         mFragments.put(FRAGMENT_ID_BROADCAST, new BroadcastFragment());
         mFragments.put(FRAGMENT_ID_BARCODE, new BarcodeScanFragment());
@@ -97,16 +103,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
@@ -121,7 +117,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-         if (id == R.id.navRest1) {
+        if (id == R.id.navRest1) {
             replaceFragment(FRAGMENT_ID_LOGIN);
         } else if (id == R.id.navRest2) {
             replaceFragment(FRAGMENT_ID_ZOMATO);
@@ -136,5 +132,21 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            long tmpTime = System.currentTimeMillis();
+            long intervalTime = tmpTime - backPressedTime;
+            if (intervalTime > 0 && intervalTime < FINISH_INTERVAL_TIME) {
+                super.onBackPressed();
+            } else {
+                backPressedTime = tmpTime;
+                Toast.makeText(this, R.string.back_again, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

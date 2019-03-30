@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 
 import io.comet.R;
+import io.comet.Utils.AlertConfirmExecute;
 import io.comet.Utils.NetworkUtil;
 import io.comet.Utils.Util;
 
@@ -31,7 +32,12 @@ public class NetworkBroadcast extends BroadcastReceiver {
 
     private void connectDialog(Context context) {
         if (!NetworkUtil.isNetConnected(context)) {
-                Util.alert(context, R.string.err_connection, R.string.err_connection);
+                Util.alert(context, R.string.err_connection, R.string.err_connection, new AlertConfirmExecute() {
+                    @Override
+                    public void execute() {
+
+                    }
+                });
         }
     }
 }

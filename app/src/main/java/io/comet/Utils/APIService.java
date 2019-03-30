@@ -14,5 +14,5 @@ public interface APIService {
 
     @POST("user/logout")
     @FormUrlEncoded
-    Call<SimpleRes> signout(@Field("device") String device);
+    Call<SimpleRes> logout(@Field("device") String device);
 }

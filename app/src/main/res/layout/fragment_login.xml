@@ -32,23 +32,23 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/signInTitle"
+                android:id="@+id/loginTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/title_top_margin"
                 android:layout_marginTop="@dimen/title_top_margin"
-                android:text="@string/lr_signin_main_title"
+                android:text="@string/lr_login_main_title"
                 android:textColor="@color/black"
                 android:textSize="@dimen/display_text"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/signInSubTitle"
+                android:id="@+id/loginSubTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/title_top_margin"
                 android:layout_marginTop="@dimen/small_margin"
-                android:text="@string/lr_signin_sub_title"
+                android:text="@string/lr_login_sub_title"
                 android:textColor="@color/textGrey"
                 android:textSize="@dimen/default_text"
                 android:textStyle="bold" />
@@ -99,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
-                    android:text="@string/all_signin" />
+                    android:text="@string/all_login" />
 
                 <TextView
                     android:layout_width="wrap_content"
