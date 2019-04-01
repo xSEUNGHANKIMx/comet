@@ -17,8 +17,8 @@ public class Singleton {
     private volatile static Singleton instance = null;
     private final String LOGIN_DOMAIN = "https://api.gpac.works/";
     private AccessToken token = new AccessToken("", "");
-    private final String DARKSKY_DOMAIN = "https://api.darksky.net/forecast";
-    private final String DARKSKY_KEY = "9ddb5bc933606669297dc963fbd3574b";
+    private final String WEATHER_DOMAIN = "https://api.darksky.net/forecast";
+    private final String WEATHER_API_KEY = "9ddb5bc933606669297dc963fbd3574b";
     public final static String USER_BROADCAST_ACTION = "USER_BROADCAST_ACTION";
     public final static int ACCESS_CAMERA = 100;
     public static boolean isNetworkConnected = true;
@@ -72,9 +72,9 @@ public class Singleton {
         return builder.build().create(APIService.class);
     }
 
-    public Retrofit darkskyRetrofit() {
+    public Retrofit weatherRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl(DARKSKY_DOMAIN + File.separator + DARKSKY_KEY + File.separator)
+                .baseUrl(WEATHER_DOMAIN + File.separator + WEATHER_API_KEY + File.separator)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();

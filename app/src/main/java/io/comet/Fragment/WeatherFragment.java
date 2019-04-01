@@ -1,10 +1,15 @@
 package io.comet.Fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,8 +27,10 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,17 +52,22 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static butterknife.internal.Utils.arrayOf;
+
 @RuntimePermissions
 public class WeatherFragment extends Fragment {
     private Context mContext;
     private MainActivity mActivity;
-    final private double mLatitude = 32.715736;
-    final private double mLongitude = -117.161087;
+    private double mLatitude = 32.715736;
+    private double mLongitude = -117.161087;
+    private Location mCurrLocation = null;
     private LayoutInflater mInflater;
     private List<WeatherDataModel> mDailyWeatherDataModel = new ArrayList<>();
     private DailyReportAdapter mDailyReportAdapter = new DailyReportAdapter();
     private Animation mUpdateAnim;
 
+    @BindView(R.id.tv_city_name)
+    TextView mTvCityName;
     @BindView(R.id.icTodayWeather)
     ImageView mIconTodayWeather;
     @BindView(R.id.tvTemperature)
@@ -90,16 +102,15 @@ public class WeatherFragment extends Fragment {
 
         mBtnRefresh.setOnClickListener(mRefreshBtnClickListener);
         mUpdateAnim = AnimationUtils.loadAnimation(mActivity, R.anim.anim_refresh_rotate);
-        mBtnRefresh.startAnimation(mUpdateAnim);
+
 
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        getWeather();
-
         super.onActivityCreated(savedInstanceState);
+        checkPermissions();
     }
 
     private View.OnClickListener mRefreshBtnClickListener = new View.OnClickListener() {
@@ -111,9 +122,20 @@ public class WeatherFragment extends Fragment {
 
     @NeedsPermission(Manifest.permission.INTERNET)
     public void getWeather() {
+        mTvCityName.setText(mActivity.getString(R.string.all_wait));
         mBtnRefresh.startAnimation(mUpdateAnim);
 
-        Singleton.getInstance().darkskyRetrofit().create(APIService.class)
+        mCurrLocation = getCurrLocation();
+        if(mCurrLocation != null) {
+            mLatitude = Double.valueOf(mCurrLocation.getLatitude());
+            mLongitude = Double.valueOf(mCurrLocation.getLongitude());
+        } else {
+            // San Diego
+            mLatitude = 32.715736;
+            mLongitude = -117.161087;
+        }
+
+        Singleton.getInstance().weatherRetrofit().create(APIService.class)
                 .getWeather(mLatitude, mLongitude)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -126,6 +148,19 @@ public class WeatherFragment extends Fragment {
                             WeatherModel weather = response.body();
                             if (weather != null) {
                                 CurrentlyWeatherModel currently = weather.getCurrently();
+                                Geocoder geocoder = new Geocoder(mActivity, Locale.getDefault());
+                                List<Address> addresses = null;
+                                try {
+                                    addresses = geocoder.getFromLocation(mLatitude, mLongitude, 1);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                String cityName = addresses.get(0).getLocality();
+                                if(cityName.isEmpty()) {
+                                    mTvCityName.setText("San Diego");
+                                } else {
+                                    mTvCityName.setText(cityName);
+                                }
 
                                 mTvTemperature.setText(String.format("%.1f", currently.getTemperature()) + "\u00b0F");
                                 mTvSummary.setText(currently.getSummary());
@@ -150,6 +185,88 @@ public class WeatherFragment extends Fragment {
                         mBtnRefresh.clearAnimation();
                     }
                 });
+    }
+
+    private void checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION), Singleton.PERMISSION_CALLBACK_CONSTANT);
+            } else {
+                //just request the permission
+                requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION), Singleton.PERMISSION_CALLBACK_CONSTANT);
+            }
+        } else {
+            //You already have the permission, just go ahead.
+            proceedAfterPermission();
+        }
+    }
+
+    @SuppressLint("NeedOnRequestPermissionsResult")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == Singleton.PERMISSION_CALLBACK_CONSTANT) {
+            //check if all permissions are granted
+            boolean allgranted = false;
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    allgranted = true;
+                } else {
+                    allgranted = false;
+                    break;
+                }
+            }
+
+            if (allgranted) {
+                proceedAfterPermission();
+            } else {
+                mActivity.replaceFragment(mActivity.FRAGMENT_ID_STARTUP);
+            }
+        }
+    }
+
+    private void proceedAfterPermission() {
+        mBtnRefresh.startAnimation(mUpdateAnim);
+        getWeather();
+    }
+
+    private Location getCurrLocation() {
+        LocationManager lm = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
+        Location fineLocation = null;
+        Location coarseLocation = null;
+        Location currLocation = null;
+        if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if(lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                fineLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            } else if(lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                fineLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+
+        }
+
+        if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            coarseLocation =  lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+
+        if((fineLocation != null) && (coarseLocation != null)) {
+            if(fineLocation.getAccuracy() < coarseLocation.getAccuracy()) {
+                currLocation = fineLocation;
+            } else {
+                currLocation = coarseLocation;
+            }
+        } else if ((fineLocation != null) && (coarseLocation == null)) {
+            currLocation = fineLocation;
+        } else if ((fineLocation == null) && (coarseLocation != null)) {
+            currLocation = coarseLocation;
+        }
+
+        return currLocation;
     }
 
     class DailyReportAdapter extends RecyclerView.Adapter<DailyReportViewHolder> {

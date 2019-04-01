@@ -102,7 +102,7 @@ public class BarcodeScanFragment extends Fragment implements View.OnTouchListene
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        checkCameraPermission();
+        checkPermission();
     }
 
     private void proceedAfterPermission() {
@@ -216,7 +216,7 @@ public class BarcodeScanFragment extends Fragment implements View.OnTouchListene
         }
     }
 
-    private void checkCameraPermission() {
+    private void checkPermission() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
                 requestPermissions(arrayOf(Manifest.permission.CAMERA), Singleton.PERMISSION_CALLBACK_CONSTANT);

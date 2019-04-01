@@ -54,10 +54,10 @@ public class CapturePhotoFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        checkStoragePermissions();
+        checkPermissions();
     }
 
-    private void checkStoragePermissions() {
+    private void checkPermissions() {
         if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
