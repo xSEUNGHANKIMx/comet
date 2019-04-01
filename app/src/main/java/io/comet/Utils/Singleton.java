@@ -22,6 +22,8 @@ public class Singleton {
     public final static String USER_BROADCAST_ACTION = "USER_BROADCAST_ACTION";
     public final static int ACCESS_CAMERA = 100;
     public static boolean isNetworkConnected = true;
+    public static final int PERMISSION_CALLBACK_CONSTANT = 101;
+    public static final int REQUEST_PERMISSION_SETTING = 102;
 
     private Singleton() {
     }

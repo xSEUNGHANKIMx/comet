@@ -32,4 +32,9 @@
     <string name="user_broadcast_received">User broadcast received!</string>
     <string name="send_broadcast_text">Send User Broadcast</string>
     <string name="capture_photo_text">Capture Photo</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="permission_camera">This app needs camera permission to scan barcode</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+    <string name="grant">GRANT</string>
+    <string name="all_cancel">CANCEL</string>
 </resources>
