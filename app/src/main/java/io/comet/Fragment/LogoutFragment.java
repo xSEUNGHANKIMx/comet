@@ -10,9 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.comet.Activity.MainActivity;
 import io.comet.Model.SimpleRes;
 import io.comet.R;
@@ -22,7 +27,11 @@ import retrofit2.Response;
 public class LogoutFragment extends Fragment {
     private Context mContext;
     private MainActivity mActivity;
-    private Button logoutBtn;
+
+    @BindView(R.id.logoutBtn)
+    Button logoutBtn;
+    @BindView(R.id.tvToken)
+    TextView tvToken;
 
     @Nullable
     @Override
@@ -30,8 +39,9 @@ public class LogoutFragment extends Fragment {
         mContext = getContext();
         mActivity = (MainActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_logout, container, false);
-        logoutBtn = view.findViewById(R.id.logoutBtn);
+        ButterKnife.bind(this, view);
 
+        tvToken.setText(Singleton.getInstance().getToken().aToken);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override

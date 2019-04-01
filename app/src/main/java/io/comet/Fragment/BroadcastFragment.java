@@ -14,6 +14,8 @@ import android.widget.Button;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.comet.Activity.MainActivity;
 import io.comet.Model.SimpleRes;
 import io.comet.R;
@@ -23,7 +25,9 @@ import retrofit2.Response;
 public class BroadcastFragment extends Fragment {
     private Context mContext;
     private MainActivity mActivity;
-    private Button broadcastBtn;
+
+    @BindView(R.id.broadcastBtn)
+    Button broadcastBtn;
 
     @Nullable
     @Override
@@ -31,7 +35,7 @@ public class BroadcastFragment extends Fragment {
         mContext = getContext();
         mActivity = (MainActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_broadcast, container, false);
-        broadcastBtn = view.findViewById(R.id.broadcastBtn);
+        ButterKnife.bind(this, view);
 
         broadcastBtn.setOnClickListener(new View.OnClickListener() {
 

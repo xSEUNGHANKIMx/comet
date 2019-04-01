@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.comet.Activity.MainActivity;
 import io.comet.Model.AccessToken;
 import io.comet.R;
@@ -29,9 +31,14 @@ import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 public class LoginFragment extends Fragment {
     private Context mContext;
     private MainActivity mActivity;
-    private Button loginBtn;
     private String email, password;
-    private ExtendedEditText emailEdit, pwdEdit;
+
+    @BindView(R.id.emailEdt)
+    ExtendedEditText emailEdit;
+    @BindView(R.id.pwdEdt)
+    ExtendedEditText pwdEdit;
+    @BindView(R.id.loginBtn)
+    Button loginBtn;
 
     @Nullable
     @Override
@@ -39,9 +46,7 @@ public class LoginFragment extends Fragment {
         mContext = getContext();
         mActivity = (MainActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        emailEdit = view.findViewById(R.id.emailEdt);
-        pwdEdit = view.findViewById(R.id.pwdEdt);
-        loginBtn = view.findViewById(R.id.loginBtn);
+        ButterKnife.bind(this, view);
 
         emailEdit.addTextChangedListener(new TextWatcher() {
             @Override

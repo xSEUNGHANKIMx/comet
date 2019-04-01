@@ -17,6 +17,8 @@ import android.widget.Button;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.comet.Activity.MainActivity;
 import io.comet.R;
 import io.comet.Utils.Singleton;
@@ -27,7 +29,9 @@ import static butterknife.internal.Utils.arrayOf;
 public class CapturePhotoFragment extends Fragment {
     private Context mContext;
     private MainActivity mActivity;
-    private Button captureBtn;
+
+    @BindView(R.id.captureBtn)
+    Button captureBtn;
 
     @Nullable
     @Override
@@ -35,7 +39,8 @@ public class CapturePhotoFragment extends Fragment {
         mContext = getContext();
         mActivity = (MainActivity) getActivity();
         View view = inflater.inflate(R.layout.fragment_capture, container, false);
-        captureBtn = view.findViewById(R.id.captureBtn);
+        ButterKnife.bind(this, view);
+
         captureBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
